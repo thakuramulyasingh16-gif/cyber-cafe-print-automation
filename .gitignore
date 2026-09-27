@@ -1,0 +1,70 @@
+# Dependencies
+node_modules/
+*/node_modules/
+.pnp
+.pnp.js
+
+# Environment variables & secrets
+.env
+.env.*
+*.env
+*.local
+!.env.example
+!*.env.example
+
+# Local SQLite databases
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
+# Temporary uploads and runtime temp files
+backend/uploads/*
+!backend/uploads/.gitkeep
+print-agent/temp/*
+!print-agent/temp/.gitkeep
+/temp/
+/tmp/
+
+# Build outputs
+dist/
+*/dist/
+build/
+*/build/
+out/
+coverage/
+
+# TypeScript cache / build info
+*.tsbuildinfo
+*/tsconfig.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE and Editor files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

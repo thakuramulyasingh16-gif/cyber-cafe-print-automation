@@ -1,0 +1,172 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("ADMIN") // ADMIN | SUPER_ADMIN
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  auditLogs AuditLog[]
+}
+
+model PricingRule {
+  id        String   @id @default(uuid())
+  paperSize String   // A4, A3, LETTER
+  colorMode String   // BW, COLOR
+  pricePerPage Float
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([paperSize, colorMode])
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Document {
+  id           String   @id @default(uuid())
+  originalName String
+  storedName   String
+  mimeType     String
+  sizeBytes    Int
+  pageCount    Int?
+  uploadedAt   DateTime @default(now())
+
+  orders Order[]
+}
+
+model Order {
+  id            String   @id @default(uuid())
+  orderNumber   String   @unique
+  documentId    String
+  document      Document @relation(fields: [documentId], references: [id])
+  
+  // Print configuration
+  paperSize     String   // A4, A3, LETTER
+  colorMode     String   // BW, COLOR
+  copies        Int      @default(1)
+  pageRangeStart Int?
+  pageRangeEnd   Int?
+  duplex        Boolean  @default(false)
+  
+  // Pricing (snapshot at time of order)
+  pricePerPage  Float
+  totalPages    Int
+  totalAmount   Float
+  
+  // Customer info
+  customerName  String?
+  customerPhone String?
+  
+  // Payment
+  paymentMode   String   // CASH, ONLINE
+  paymentStatus String   @default("PENDING") // PENDING, PAID, FAILED, REFUNDED
+  
+  // Order status
+  status        String   @default("CREATED")
+  // CREATED | PAYMENT_PENDING | PAID | QUEUED | PRINTING | COMPLETED | PAYMENT_FAILED | PRINT_FAILED | CANCELLED
+  
+  // Timestamps
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  paidAt        DateTime?
+  completedAt   DateTime?
+  
+  payments    Payment[]
+  printJobs   PrintJob[]
+  auditLogs   AuditLog[]
+}
+
+model Payment {
+  id              String   @id @default(uuid())
+  orderId         String
+  order           Order    @relation(fields: [orderId], references: [id])
+  
+  method          String   // CASH, RAZORPAY
+  amount          Float
+  status          String   // PENDING, SUCCESS, FAILED, REFUNDED
+  
+  // For online payments
+  gatewayOrderId  String?
+  gatewayPaymentId String?
+  gatewaySignature String?
+  
+  // For cash payments
+  confirmedByUserId String?
+  confirmedAt      DateTime?
+  notes            String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Printer {
+  id           String   @id @default(uuid())
+  name         String   @unique
+  displayName  String
+  isDefault    Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  capabilities String?  // JSON string of capabilities
+  lastSeen     DateTime?
+  status       String   @default("UNKNOWN") // ONLINE, OFFLINE, UNKNOWN, ERROR
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  printJobs PrintJob[]
+}
+
+model PrintJob {
+  id         String   @id @default(uuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  printerId  String?
+  printer    Printer? @relation(fields: [printerId], references: [id])
+  
+  status     String   @default("QUEUED")
+  // QUEUED | PRINTING | COMPLETED | FAILED | CANCELLED
+  
+  attempts   Int      @default(0)
+  maxAttempts Int     @default(3)
+  lastError  String?
+  
+  queuedAt   DateTime @default(now())
+  startedAt  DateTime?
+  completedAt DateTime?
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  orderId   String?
+  order     Order?   @relation(fields: [orderId], references: [id])
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  
+  action    String
+  details   String?  // JSON
+  ipAddress String?
+  
+  createdAt DateTime @default(now())
+}

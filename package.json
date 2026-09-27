@@ -1,0 +1,22 @@
+{
+  "name": "cybercafe-print-automation",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "customer-app",
+    "admin-app",
+    "print-agent"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run dev --workspace=customer-app\" \"npm run dev --workspace=admin-app\"",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:customer": "npm run dev --workspace=customer-app",
+    "dev:admin": "npm run dev --workspace=admin-app",
+    "dev:agent": "npm run dev --workspace=print-agent",
+    "build": "npm run build --workspaces",
+    "install:all": "npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}

@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#140c07] text-[#fbf5ee] font-sans antialiased selection:bg-primary-500 selection:text-clay-darkest;
+  }
+}
+
+@layer components {
+  /* Tactile Saffron Primary Button */
+  .btn-primary {
+    @apply relative bg-gradient-to-b from-[#fbbf24] via-[#f59e0b] to-[#d97706] text-[#241308] font-bold px-4 py-2.5 rounded-2xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm border border-amber-300/40 flex items-center justify-center;
+    box-shadow: 
+      0 4px 14px -2px rgba(217, 119, 6, 0.45),
+      inset 0 1.5px 2px rgba(255, 255, 255, 0.5),
+      inset 0 -2px 3px rgba(146, 64, 14, 0.4);
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    @apply -translate-y-0.5 brightness-105;
+    box-shadow: 
+      0 6px 18px -2px rgba(217, 119, 6, 0.6),
+      inset 0 1.5px 2px rgba(255, 255, 255, 0.6),
+      inset 0 -2px 4px rgba(146, 64, 14, 0.45);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    @apply translate-y-0.5 brightness-95;
+    box-shadow: 
+      0 2px 6px -1px rgba(217, 119, 6, 0.35),
+      inset 0 2px 4px rgba(146, 64, 14, 0.5);
+  }
+
+  /* Tactile Brown Secondary Button */
+  .btn-secondary {
+    @apply relative bg-gradient-to-b from-[#342217] to-[#25170e] text-[#f5e6d6] font-semibold px-4 py-2.5 rounded-2xl transition-all duration-200 border border-[#543825]/50 hover:border-primary-500/40 hover:text-white text-sm flex items-center justify-center;
+    box-shadow: 
+      0 4px 12px -2px rgba(12, 7, 3, 0.5),
+      inset 0 1.5px 1.5px rgba(255, 235, 210, 0.08),
+      inset 0 -1.5px 2px rgba(10, 5, 2, 0.4);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    @apply -translate-y-0.5 from-[#3d291c] to-[#2b1b11];
+    box-shadow: 
+      0 6px 16px -2px rgba(12, 7, 3, 0.6),
+      inset 0 1.5px 2px rgba(255, 235, 210, 0.12),
+      inset 0 -1.5px 2px rgba(10, 5, 2, 0.5);
+  }
+
+  /* Clay Terracotta Danger Button */
+  .btn-danger {
+    @apply relative bg-gradient-to-b from-[#4a211f] to-[#361514] text-rose-300 font-semibold px-4 py-2.5 rounded-2xl transition-all duration-200 border border-rose-800/40 hover:border-rose-600/60 hover:text-white text-sm flex items-center justify-center;
+    box-shadow: 
+      0 4px 12px -2px rgba(20, 6, 6, 0.5),
+      inset 0 1.5px 1.5px rgba(255, 210, 210, 0.1),
+      inset 0 -1.5px 2px rgba(20, 6, 6, 0.4);
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    @apply -translate-y-0.5 from-[#592624] to-[#401817];
+  }
+
+  /* Clay Olive-Sage Success Button */
+  .btn-success {
+    @apply relative bg-gradient-to-b from-[#253d1d] to-[#192b13] text-emerald-300 font-semibold px-4 py-2.5 rounded-2xl transition-all duration-200 border border-emerald-800/50 hover:border-emerald-600/60 hover:text-white text-sm flex items-center justify-center;
+    box-shadow: 
+      0 4px 12px -2px rgba(8, 16, 6, 0.5),
+      inset 0 1.5px 1.5px rgba(210, 255, 210, 0.1),
+      inset 0 -1.5px 2px rgba(8, 16, 6, 0.4);
+  }
+
+  .btn-success:hover:not(:disabled) {
+    @apply -translate-y-0.5 from-[#2f4d25] to-[#203618];
+  }
+
+  /* Soft Inflated Clay Card */
+  .card {
+    @apply bg-gradient-to-b from-[#281a11] to-[#1f130b] rounded-3xl border border-[#482f1f]/60 transition-all duration-200;
+    box-shadow: 
+      8px 14px 28px -4px rgba(10, 6, 3, 0.75),
+      -4px -4px 14px 0px rgba(245, 158, 11, 0.04),
+      inset 1px 1px 2px rgba(255, 230, 195, 0.12),
+      inset -2px -2px 5px rgba(10, 5, 2, 0.5);
+  }
+
+  /* Recessed Tactile Input */
+  .input-field {
+    @apply bg-[#180e08] border border-[#4a3020]/80 text-[#fbf5ee] placeholder-[#8c6b53] rounded-2xl px-4 py-2.5 w-full focus:outline-none focus:border-primary-500 transition-all duration-200 text-sm;
+    box-shadow: 
+      inset 2px 3px 6px rgba(8, 4, 2, 0.7),
+      inset -1px -1px 2px rgba(255, 230, 200, 0.04),
+      0 1px 2px rgba(255, 255, 255, 0.02);
+  }
+
+  .input-field:focus {
+    box-shadow: 
+      inset 2px 3px 6px rgba(8, 4, 2, 0.7),
+      0 0 0 3px rgba(245, 158, 11, 0.25);
+  }
+
+  /* Clay Dashboard Stat Card */
+  .stat-card {
+    @apply card p-5 flex flex-col gap-1.5 relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5;
+  }
+
+  /* Claymorphic Badges */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold clay-pill tracking-wide;
+  }
+
+  .badge-yellow {
+    @apply badge bg-[#3b2718] text-amber-300 border border-amber-500/40;
+  }
+
+  .badge-green {
+    @apply badge bg-[#1c2e17] text-emerald-300 border border-emerald-600/40;
+  }
+
+  .badge-blue {
+    @apply badge bg-[#382619] text-primary-300 border border-primary-500/40;
+  }
+
+  .badge-red {
+    @apply badge bg-[#381c1b] text-rose-300 border border-rose-600/40;
+  }
+
+  .badge-purple {
+    @apply badge bg-[#3a201d] text-amber-200 border border-amber-600/40;
+  }
+
+  .badge-gray {
+    @apply badge bg-[#22150d] text-[#bfa08a] border border-[#442b1b];
+  }
+}
+
+/* Claymorphic Sidebar Links */
+.sidebar-link {
+  @apply flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 text-[#bfa08a] hover:text-[#fdf7f0] hover:bg-[#2b1b11] border border-transparent;
+}
+
+.sidebar-link.active {
+  @apply text-[#221207] bg-gradient-to-r from-[#fbbf24] to-[#f59e0b] border-amber-300/40 font-bold;
+  box-shadow: 
+    0 4px 14px -2px rgba(217, 119, 6, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px rgba(120, 53, 15, 0.3);
+}
+
+.sidebar-link.active svg {
+  @apply text-[#221207];
+}
+
+/* Warm Clay Pill Status / Badges */
+.clay-pill {
+  box-shadow: 
+    2px 4px 8px -1px rgba(10, 6, 3, 0.5),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.15),
+    inset -1px -1px 2px rgba(10, 5, 2, 0.4);
+}
+
+/* Custom Scrollbar in Chocolate & Caramel */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #140c07; }
+::-webkit-scrollbar-thumb { 
+  background: #382417; 
+  border-radius: 4px; 
+  border: 2px solid #140c07;
+}
+::-webkit-scrollbar-thumb:hover { background: #563724; }
